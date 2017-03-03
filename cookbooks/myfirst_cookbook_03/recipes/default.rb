@@ -8,3 +8,8 @@ package 'vim'
 package 'lynx'
 package 'telnet'
 package 'unzip'
+
+package 'openssl' if node['platform'] == 'centos'
+
+include_recipe 'chef_nginx'
+include_recipe 'java'

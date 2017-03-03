@@ -1,13 +1,16 @@
 ---
 driver:
-  name: docker 
+  name: dokken
+  privileged: true # because Docker and SystemD/Upstart
+  customize:
+    memory: '512'
+
+transport:
+  name: dokken
 
 provisioner:
-  name: chef_zero
-  # You may wish to disable always updating cookbooks in CI or other testing environments.
-  # For example:
-  #   always_update_cookbooks: <%= !ENV['CI'] %>
-  always_update_cookbooks: true
+  name: dokken
+  deprecations_as_errors: true
 
 verifier:
   name: inspec
@@ -15,10 +18,19 @@ verifier:
 platforms:
   - name: ubuntu-16.04
     driver:
-     image: ubuntu:16.04
-  - name: centos-7.2
+      image: ubuntu:16.04
+      pid_one_command: /sbin/init
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get install apt-transport-https net-tools -y
+  - name: centos-7
     driver:
-     image: centos:7.2.1511
+      image: centos:7
+      platform: rhel
+      pid_one_command: /usr/lib/systemd/systemd
+      intermediate_instructions:
+        - RUN yum clean all
+        - RUN yum -y install net-tools lsof
 
 suites:
   - name: default

@@ -10,3 +10,4 @@ issues_url 'https://github.com/oswaldderiemaecker/chef-repo-training/myfirst_coo
 source_url 'https://github.com/oswaldderiemaecker/chef-repo-training/myfirst_cookbook' if respond_to?(:source_url)
 
 depends 'chef_nginx', '~> 5.0.7'
+depends 'java', '~> 1.47.0'

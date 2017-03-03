@@ -1,4 +1,6 @@
 source 'https://supermarket.chef.io'
 
 metadata
-cookbook 'chef_nginx', '~> 5.1.0'
+
+cookbook 'chef_nginx', '~> 5.0.7'
+cookbook 'java', '~> 1.47.0'
